@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import { Switch, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Login from './components/Login';
+import Signup from './components/Signup';
+import GetMsg from './components/GetMsg';
+import SendMsg from './components/SendMsg';
+
+class App extends React.Component {
+  state = {
+    isLogin: false,
+  };
+
+  render() {
+    const { isLogin } = this.state;
+
+    return (
+      <div className="App">
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={() => <Login isLogin={isLogin} />}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={() => <Signup isLogin={isLogin} />}
+          />
+          <Route
+            exact
+            path="/getmsg"
+            render={() => <GetMsg isLogin={isLogin} />}
+          />
+          <Route
+            exact
+            path="/sendmsg"
+            render={() => <SendMsg isLogin={isLogin} />}
+          />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
