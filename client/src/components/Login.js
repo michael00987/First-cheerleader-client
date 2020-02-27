@@ -10,11 +10,15 @@ function Login() {
       </div>
       <div class="이메일 비밀번호 입력 및 제출">
         <form>
-          이메일
-          <input className="Login_input_email" placeholder="입력" />
-          비밀번호
-          <input className="Login_input_password" placeholder="입력" />
-          <input type="submit" />
+          <div>
+            이메일
+            <input className="Login_input_email" placeholder="입력" />
+          </div>
+          <div>
+            비밀번호
+            <input className="Login_input_password" placeholder="입력" />
+          </div>
+          <input className="Login_button" type="submit" />
         </form>
       </div>
     </div>
