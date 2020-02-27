@@ -26,9 +26,10 @@ class Signup extends React.Component {
     this.setState({ [key]: e.target.value });
   };
 
-  handleInputReset = e => {
+  handleInputReset(e) {
     // 페이지 리로딩 방지
     e.preventDefault();
+    // console.log('reset');
     // 상태 초기화
     this.setState({
       email: '',
@@ -36,7 +37,7 @@ class Signup extends React.Component {
       passwordConfirm: '',
       username: '',
     });
-  };
+  }
   /*******************************************************************/
 
   /*************************** 패스워드 일치 ****************************/
@@ -68,8 +69,10 @@ class Signup extends React.Component {
   /*********************************************************************/
 
   render() {
-    // const { email, password, passwordConfirm, username } = this.state;
+    const { email, password, passwordConfirm, username } = this.state;
     // const { handleIsLogin } = this.props;
+    const { history } = this.props;
+    // console.log('email: ', email);
     return (
       <div className="signup">
         <h1>회원 가입</h1>
@@ -85,6 +88,7 @@ class Signup extends React.Component {
                 type="email"
                 placeholder="이메일을 입력 하세요"
                 onChange={this.handleInputValue('email')}
+                value={email}
               />
             </div>
 
@@ -95,6 +99,7 @@ class Signup extends React.Component {
                 type="password"
                 placeholder="비밀번호를 입력 하세요"
                 onChange={this.handleInputValue('password')}
+                value={password}
               />
             </div>
 
@@ -105,6 +110,7 @@ class Signup extends React.Component {
                 type="password"
                 placeholder="비밀번호를 다시 입력 하세요"
                 onChange={this.handleInputValue('passwordConfirm')}
+                value={passwordConfirm}
               />
               <div className="feedback">{this.renderFeedbackMessage()}</div>
             </div>
@@ -115,21 +121,45 @@ class Signup extends React.Component {
                 className="Signup_input_username"
                 placeholder="이름을 입력 하세요"
                 onChange={this.handleInputValue('username')}
+                value={username}
               />
             </div>
 
             <div>
+              {/*
               <Link to="/login">
                 <button className="Signup_button">취소</button>
               </Link>
               <Link to="/">
                 <button className="Signup_button">회원가입</button>
-              </Link>
-              {/*<Link to="/signup"> */}
-              <button className="Signup_button" onClick={this.handleInputReset}>
+              </Link>*/}
+              {/*<button className="Signup_button" onClick={this.handleInputReset}>
                 다시작성
-              </button>
+                </button> 
               {/*</Link>*/}
+              <div className="Signup_frame">
+                <span
+                  className="Signup_button"
+                  type="text/css"
+                  onClick={() => history.push('/login')}
+                >
+                  취소
+                </span>
+                <span
+                  className="Signup_button"
+                  type="text/css"
+                  onClick={() => history.push('/')}
+                >
+                  회원가입
+                </span>
+                <span
+                  className="Signup_button"
+                  type="text/css"
+                  onClick={this.handleInputReset}
+                >
+                  다시 작성
+                </span>
+              </div>
             </div>
           </div>
         </form>
@@ -138,4 +168,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);

@@ -41,12 +41,18 @@
   color: red;
 }
 
-.Signup_button {
+div.Signup_frame {
+  margin: 40px;
+}
+
+span.Signup_button {
   width: 100px;
   height: 30px;
+  font-size: 16px;
   margin: 10px;
-  border-radius: 5px;
-  font-size: 12px;
+  padding: 10px;
   font-weight: bold;
   background-color: lightgrey;
+  cursor: pointer;
+  border-radius: 5px;
 }
