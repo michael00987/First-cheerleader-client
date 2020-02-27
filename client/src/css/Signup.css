@@ -45,14 +45,13 @@ div.Signup_frame {
   margin: 40px;
 }
 
-span.Signup_button {
-  width: 100px;
-  height: 30px;
-  font-size: 16px;
+.Signup_button {
+  width: 120px;
+  height: 40px;
   margin: 10px;
-  padding: 10px;
-  font-weight: bold;
-  background-color: lightgrey;
-  cursor: pointer;
   border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: lightblue;
+  cursor: pointer;
 }

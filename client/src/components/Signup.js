@@ -2,7 +2,7 @@ import React from 'react';
 // import './App.css';
 // import { Switch, Route } from 'react-router-dom';
 import { withRouter, Link, useHistory } from 'react-router-dom';
-import './Signup.css';
+import '../css/Signup.css';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -138,27 +138,25 @@ class Signup extends React.Component {
                 </button> 
               {/*</Link>*/}
               <div className="Signup_frame">
-                <span
+                <input
                   className="Signup_button"
-                  type="text/css"
+                  type="submit"
+                  value="취소"
                   onClick={() => history.push('/login')}
-                >
-                  취소
-                </span>
-                <span
+                />
+                <input
+                  className="Signup_button"
+                  type="submit"
+                  value="회원가입"
+                  onClick={() => history.push('/login')}
+                />
+                <input
                   className="Signup_button"
                   type="text/css"
-                  onClick={() => history.push('/')}
-                >
-                  회원가입
-                </span>
-                <span
-                  className="Signup_button"
-                  type="text/css"
+                  type="submit"
+                  value="다시작성"
                   onClick={this.handleInputReset}
-                >
-                  다시 작성
-                </span>
+                />
               </div>
             </div>
           </div>

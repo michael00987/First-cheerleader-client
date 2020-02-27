@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter, Link, useHistory } from 'react-router-dom';
-import './SendMsg.css';
+import '../css/SendMsg.css';
 
 class SendMsg extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class SendMsg extends React.Component {
               type="submit"
               value="응원보내기"
               onClick={() => {
-                history.push('/');
+                history.push('/getMsg');
               }}
             />
 

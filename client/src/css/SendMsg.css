@@ -16,13 +16,14 @@
 }
 
 .sendMsg_sendBtn {
-  width: 150px;
+  width: 120px;
   height: 40px;
   margin: 10px;
   border-radius: 5px;
   font-size: 15px;
   font-weight: bold;
   background-color: lightblue;
+  cursor: pointer;
 }
 
 .sendMsg_back {
@@ -33,4 +34,5 @@
   font-size: 15px;
   font-weight: bold;
   background-color: lightblue;
+  cursor: pointer;
 }

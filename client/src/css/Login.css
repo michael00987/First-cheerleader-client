@@ -14,21 +14,25 @@ div#out {
   margin: 10px;
   border-radius: 5px;
 }
-span.Login_to_Signupbutton {
-  width: 100px;
-  height: 30px;
-  font-size: 16px;
+
+.Login_to_Signupbutton {
+  width: 120px;
+  height: 40px;
   margin: 10px;
-  color: rgb(67, 139, 233);
-  background-color: white;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: lightblue;
   cursor: pointer;
 }
-span.Login_button {
-  width: 100px;
-  height: 30px;
-  font-size: 25px;
+.Login_button {
+  width: 120px;
+  height: 40px;
+  margin: 10px;
+  border-radius: 5px;
+  font-size: 15px;
   font-weight: bold;
-  background-color: white;
+  background-color: lightblue;
   cursor: pointer;
 }
 .Login_button_Frame {
