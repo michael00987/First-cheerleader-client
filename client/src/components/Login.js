@@ -1,5 +1,5 @@
 import React from 'react';
-import './Login.css';
+import '../css/Login.css';
 import { withRouter } from 'react-router-dom';
 
 class Login extends React.Component {
@@ -24,7 +24,7 @@ class Login extends React.Component {
             <div className="Login_button_Frame">
               <input
                 className="Login_to_Signupbutton"
-                type="text"
+                type="submit"
                 onClick={() => history.push('/signup')}
                 value=" 아직 회원가입을 하지 않으셨나요?"
               />
@@ -33,8 +33,9 @@ class Login extends React.Component {
               <input
                 type="submit"
                 className="Login_button"
-                type="text/css"
+                type="submit"
                 value="로그인"
+                onClick={() => history.push('/getmsg')}
               />
             </div>
           </form>
