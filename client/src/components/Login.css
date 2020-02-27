@@ -14,7 +14,7 @@ div#out {
   margin: 10px;
   border-radius: 5px;
 }
-span.Signup_button {
+span.Login_to_Signupbutton {
   width: 100px;
   height: 30px;
   font-size: 16px;
@@ -31,6 +31,6 @@ span.Login_button {
   background-color: white;
   cursor: pointer;
 }
-.button_Frame {
+.Login_button_Frame {
   padding: 20px;
 }

@@ -21,19 +21,21 @@ class Login extends React.Component {
               비밀번호
               <input className="Login_input_password" placeholder="입력" />
             </div>
-            <div className="button_Frame">
-              <span
-                className="Signup_button"
+            <div className="Login_button_Frame">
+              <input
+                className="Login_to_Signupbutton"
                 type="text"
                 onClick={() => history.push('/signup')}
-              >
-                아직 회원가입을 하지 않으셨나요?
-              </span>
+                value=" 아직 회원가입을 하지 않으셨나요?"
+              />
             </div>
             <div className="button_Frame">
-              <span className="Login_button" type="text/css">
-                로그인
-              </span>
+              <input
+                type="submit"
+                className="Login_button"
+                type="text/css"
+                value="로그인"
+              />
             </div>
           </form>
         </div>

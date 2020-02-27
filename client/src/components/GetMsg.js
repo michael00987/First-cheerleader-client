@@ -9,10 +9,17 @@ class GetMsg extends React.Component {
       <div id="out">
         <div className="메세지 페이지">Message Page</div>
         <div>
-          <input className="show_msg" type="text" value="당신을 응원합니다." />
+          <textarea
+            className="show_msg"
+            type="text"
+            cols="70"
+            rows="30"
+            value="당신을 응원합니다."
+          />
         </div>
         <div>
           <input
+            className="GetMsg_to_CheerBtn"
             type="submit"
             value="응원메세지 작성하기"
             onClick={() => history.push('/login')}
