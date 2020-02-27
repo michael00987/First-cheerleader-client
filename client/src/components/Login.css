@@ -1,3 +1,36 @@
 div#out {
   text-align: center;
 }
+.Login_input_email {
+  width: 300px;
+  height: 30px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.Login_input_password {
+  width: 300px;
+  height: 30px;
+  margin: 10px;
+  border-radius: 5px;
+}
+span.Signup_button {
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  margin: 10px;
+  color: rgb(67, 139, 233);
+  background-color: white;
+  cursor: pointer;
+}
+span.Login_button {
+  width: 100px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: white;
+  cursor: pointer;
+}
+.button_Frame {
+  padding: 20px;
+}
