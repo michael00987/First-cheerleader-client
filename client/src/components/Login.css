@@ -14,12 +14,23 @@ div#out {
   margin: 10px;
   border-radius: 5px;
 }
-.Login_button {
+span.Signup_button {
   width: 100px;
   height: 30px;
+  font-size: 16px;
   margin: 10px;
-  border-radius: 5px;
-  font-size: 12px;
+  color: rgb(67, 139, 233);
+  background-color: white;
+  cursor: pointer;
+}
+span.Login_button {
+  width: 100px;
+  height: 30px;
+  font-size: 25px;
   font-weight: bold;
-  background-color: lightgrey;
+  background-color: white;
+  cursor: pointer;
+}
+.button_Frame {
+  padding: 20px;
 }
