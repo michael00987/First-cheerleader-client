@@ -2,32 +2,11 @@
   text-align: center;
 }
 
-.Signup_title {
+.title {
   font-weight: bold;
 }
 
-.Signup_input_email {
-  width: 300px;
-  height: 30px;
-  margin: 10px;
-  border-radius: 5px;
-}
-
-.Signup_input_password {
-  width: 300px;
-  height: 30px;
-  margin: 10px;
-  border-radius: 5px;
-}
-
-.Signup_input_passwordConfirm {
-  width: 300px;
-  height: 30px;
-  margin: 10px;
-  border-radius: 5px;
-}
-
-.Signup_input_username {
+.input_contants {
   width: 300px;
   height: 30px;
   margin: 10px;
@@ -41,11 +20,11 @@
   color: red;
 }
 
-div.Signup_frame {
+div.Buttens_frame {
   margin: 40px;
 }
 
-.Signup_button {
+.button {
   width: 120px;
   height: 40px;
   margin: 10px;
