@@ -3,6 +3,9 @@ import React from 'react';
 // import { Switch, Route } from 'react-router-dom';
 import { withRouter, Link, useHistory } from 'react-router-dom';
 import '../css/Signup.css';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 class Signup extends React.Component {
   constructor(props) {
@@ -148,7 +151,22 @@ class Signup extends React.Component {
                   className="Signup_button"
                   type="submit"
                   value="회원가입"
-                  onClick={() => history.push('/login')}
+                  onClick={e => {
+                    e.preventDefault();
+                    axios({
+                      method: 'post',
+                      url: 'http://15.164.164.204:4000/user/signin',
+                      data: {
+                        email: this.state.email,
+                        username: this.state.username,
+                        password: this.state.password,
+                      },
+                    }).then(res => {
+                      console.log(res);
+                      console.log(res.data);
+                    });
+                    // .catch(err => console.log(err));
+                  }}
                 />
                 <input
                   className="Signup_button"
