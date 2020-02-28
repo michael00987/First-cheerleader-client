@@ -78,107 +78,95 @@ class Signup extends React.Component {
     // console.log('email: ', email);
     return (
       <div className="signup">
-        <h1>회원 가입</h1>
-        <form>
-          <div>
-            <img src="https://source.unsplash.com/user/hy0212/likes/400x300" />
+        <div>회원 가입</div>
+        <div>
+          <img src="https://source.unsplash.com/user/hy0212/likes/400x300" />
+        </div>
+        <div>
+          <div className="title">
+            <div>ID(e-mail):</div>
+            <input
+              className="input_contants"
+              type="email"
+              placeholder="이메일을 입력 하세요"
+              onChange={this.handleInputValue('email')}
+              value={email}
+            />
           </div>
+
+          <div className="title">
+            <div>Password:</div>
+            <input
+              className="input_contants"
+              type="password"
+              placeholder="비밀번호를 입력 하세요"
+              onChange={this.handleInputValue('password')}
+              value={password}
+            />
+          </div>
+
+          <div className="title">
+            <div>Comfirm:</div>
+            <input
+              className="input_contants"
+              type="password"
+              placeholder="비밀번호를 다시 입력 하세요"
+              onChange={this.handleInputValue('passwordConfirm')}
+              value={passwordConfirm}
+            />
+            <div className="feedback">{this.renderFeedbackMessage()}</div>
+          </div>
+
+          <div className="title">
+            <div>Username:</div>
+            <input
+              className="input_contants"
+              placeholder="이름을 입력 하세요"
+              onChange={this.handleInputValue('username')}
+              value={username}
+            />
+          </div>
+
           <div>
-            <div className="Signup_title">
-              ID(e-mail):
+            <div className="Buttens_frame">
               <input
-                className="Signup_input_email"
-                type="email"
-                placeholder="이메일을 입력 하세요"
-                onChange={this.handleInputValue('email')}
-                value={email}
+                className="button"
+                type="submit"
+                value="취소"
+                onClick={() => history.push('/login')}
               />
-            </div>
-
-            <div className="Signup_title">
-              Password:
               <input
-                className="Signup_input_password"
-                type="password"
-                placeholder="비밀번호를 입력 하세요"
-                onChange={this.handleInputValue('password')}
-                value={password}
+                className="button"
+                type="submit"
+                value="회원가입"
+                onClick={e => {
+                  e.preventDefault();
+                  axios({
+                    method: 'post',
+                    url: 'http://15.164.164.204:4000/user/signup',
+                    data: {
+                      email: this.state.email,
+                      username: this.state.username,
+                      password: this.state.password,
+                    },
+                  })
+                    .then(res => {
+                      alert(res.data.id + '번째 회원님 환영합니다');
+                      history.push('/getmsg');
+                    })
+                    .catch(err => console.log(err));
+                }}
               />
-            </div>
-
-            <div className="Signup_title">
-              Comfirm:
               <input
-                className="Signup_input_passwordConfirm"
-                type="password"
-                placeholder="비밀번호를 다시 입력 하세요"
-                onChange={this.handleInputValue('passwordConfirm')}
-                value={passwordConfirm}
+                className="button"
+                type="text/css"
+                type="submit"
+                value="다시작성"
+                onClick={this.handleInputReset}
               />
-              <div className="feedback">{this.renderFeedbackMessage()}</div>
-            </div>
-
-            <div className="Signup_title">
-              Username:
-              <input
-                className="Signup_input_username"
-                placeholder="이름을 입력 하세요"
-                onChange={this.handleInputValue('username')}
-                value={username}
-              />
-            </div>
-
-            <div>
-              {/*
-              <Link to="/login">
-                <button className="Signup_button">취소</button>
-              </Link>
-              <Link to="/">
-                <button className="Signup_button">회원가입</button>
-              </Link>*/}
-              {/*<button className="Signup_button" onClick={this.handleInputReset}>
-                다시작성
-                </button> 
-              {/*</Link>*/}
-              <div className="Signup_frame">
-                <input
-                  className="Signup_button"
-                  type="submit"
-                  value="취소"
-                  onClick={() => history.push('/login')}
-                />
-                <input
-                  className="Signup_button"
-                  type="submit"
-                  value="회원가입"
-                  onClick={e => {
-                    e.preventDefault();
-                    axios({
-                      method: 'post',
-                      url: 'http://15.164.164.204:4000/user/signin',
-                      data: {
-                        email: this.state.email,
-                        username: this.state.username,
-                        password: this.state.password,
-                      },
-                    }).then(res => {
-                      console.log(res);
-                      console.log(res.data);
-                    });
-                    // .catch(err => console.log(err));
-                  }}
-                />
-                <input
-                  className="Signup_button"
-                  type="text/css"
-                  type="submit"
-                  value="다시작성"
-                  onClick={this.handleInputReset}
-                />
-              </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     );
   }

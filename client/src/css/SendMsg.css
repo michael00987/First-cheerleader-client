@@ -2,20 +2,20 @@
   text-align: center;
 }
 
-.sendMsg_header {
+.header {
   text-align: center;
   font-size: 15pt;
   font-weight: bold;
   color: grey;
 }
 
-.sendMsg_text {
+.text {
   font-size: 20pt;
   font-family: Consolas, sans-serif;
   color: grey;
 }
 
-.sendMsg_sendBtn {
+.sendBtn {
   width: 120px;
   height: 40px;
   margin: 10px;
@@ -26,7 +26,7 @@
   cursor: pointer;
 }
 
-.sendMsg_back {
+.backBtn {
   width: 120px;
   height: 40px;
   margin: 10px;

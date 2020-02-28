@@ -29,16 +29,22 @@ class SendMsg extends React.Component {
     console.log('value: ', value);
     return (
       <div className="sendMessage">
-        <h1>메세지 보내기</h1>
-        <div>
+        <div className="navigation">
           <div>
-            <span className="sendMsg_header">
-              응원하고 싶은 메세지를 입력하세요
-            </span>
+            <input className="to_CheerBtn" value="로그아웃" type="submit" />
+          </div>
+          <div className="title">메세지 보내기</div>
+          <div>
+            <input className="to_CheerBtn" value="나의정보" type="submit" />
+          </div>
+        </div>
+        <div className="body">
+          <div>
+            <span className="header">응원하고 싶은 메세지를 입력하세요</span>
           </div>
           <div>
             <textarea
-              name="sendMsg_text"
+              name="text"
               type="text"
               placeholder="응원하고 싶은 메세지를 입력하세요"
               cols="70"
@@ -46,35 +52,35 @@ class SendMsg extends React.Component {
               value={this.state.value}
               onChange={this.handleInputValue}
             />
-            <div className="sendMsg_countText">
-              <span className="sendMsg_currCount">{countText}</span>
+            <div className="countText">
+              <span className="currCount">{countText}</span>
               <span>/</span>
-              <span className="sendMsg_MaxCount">최대 150자</span>
+              <span className="MaxCount">최대 150자</span>
             </div>
           </div>
-          <div>
-            <input
-              className="sendMsg_sendBtn"
-              type="submit"
-              value="응원보내기"
-              onClick={() => {
-                if (value.length > 0) {
-                  console.log('성공적을 전송하였습니다.');
-                  history.push('/getmsg');
-                } else {
-                  console.log('빈칸은 인데?');
-                }
-              }}
-            />
-            <input
-              className="sendMsg_back"
-              type="submit"
-              value="돌아가기"
-              onClick={() => {
+        </div>
+        <div className="btns">
+          <input
+            className="sendBtn"
+            type="submit"
+            value="응원보내기"
+            onClick={() => {
+              if (value.length > 0) {
+                console.log('성공적을 전송하였습니다.');
                 history.push('/getmsg');
-              }}
-            />
-          </div>
+              } else {
+                console.log('빈칸은 인데?');
+              }
+            }}
+          />
+          <input
+            className="backBtn"
+            type="submit"
+            value="돌아가기"
+            onClick={() => {
+              history.push('/getmsg');
+            }}
+          />
         </div>
       </div>
     );

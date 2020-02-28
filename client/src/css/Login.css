@@ -1,21 +1,21 @@
-div#out {
+.login {
   text-align: center;
 }
-.Login_input_email {
+.input_email {
   width: 300px;
   height: 30px;
   margin: 10px;
   border-radius: 5px;
 }
 
-.Login_input_password {
+.input_password {
   width: 300px;
   height: 30px;
   margin: 10px;
   border-radius: 5px;
 }
 
-.Login_to_Signupbutton {
+.to_Signupbutton {
   width: 120px;
   height: 40px;
   margin: 10px;
@@ -25,7 +25,7 @@ div#out {
   background-color: lightblue;
   cursor: pointer;
 }
-.Login_button {
+.login_button {
   width: 120px;
   height: 40px;
   margin: 10px;
@@ -35,6 +35,6 @@ div#out {
   background-color: lightblue;
   cursor: pointer;
 }
-.Login_button_Frame {
+.SignupButton_Frame {
   padding: 20px;
 }
