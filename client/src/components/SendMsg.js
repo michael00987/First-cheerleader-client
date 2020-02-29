@@ -1,6 +1,7 @@
 import React from 'react';
-import { withRouter, Link, useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import '../css/SendMsg.css';
+import axios from 'axios';
 
 class SendMsg extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class SendMsg extends React.Component {
       countText: 0,
     };
     this.handleInputValue = this.handleInputValue.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   /*********************인풋 관리 *****************************/
   handleInputValue(e) {
@@ -21,12 +23,29 @@ class SendMsg extends React.Component {
       });
     }
   }
+
+  handleSubmit() {
+    // e.preventDefault();
+    axios({
+      method: 'post',
+      url: 'http://15.164.164.204:4000/user/sendMessage',
+      data: {
+        inputText: this.state.value,
+      },
+    });
+    // console.log(res.data);
+    /*
+    this.setState({
+      value: res.data.inputText,
+    }); */
+    // .catch(error => console.log(error));
+  }
   /**********************************************************/
 
   render() {
     const { history } = this.props;
     const { value, countText } = this.state;
-    console.log('value: ', value);
+    // console.log('value: ', value);
     return (
       <div className="sendMessage">
         <div className="navigation">
@@ -66,10 +85,11 @@ class SendMsg extends React.Component {
             value="응원보내기"
             onClick={() => {
               if (value.length > 0) {
-                console.log('성공적을 전송하였습니다.');
+                alert('성공적을 전송하였습니다.');
+                this.handleSubmit();
                 history.push('/getmsg');
               } else {
-                console.log('빈칸은 인데?');
+                console.log('빈칸 인데?');
               }
             }}
           />
