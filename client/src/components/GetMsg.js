@@ -4,6 +4,23 @@ import '../css/GetMsg.css';
 import axios from 'axios';
 
 class GetMsg extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: '',
+    };
+  }
+  componentDidMount() {
+    axios({
+      method: 'get',
+      url: 'http://15.164.164.204:4000/message/getMessage',
+    }).then(res => {
+      console.log(res.data.data);
+      this.setState({
+        text: res.data.data.inputText,
+      });
+    });
+  }
   render() {
     const { history } = this.props;
     return (
@@ -23,7 +40,7 @@ class GetMsg extends React.Component {
             type="text"
             cols="70"
             rows="30"
-            value="당신을 응원합니다."
+            value={this.state.text}
           />
         </div>
         <div>
@@ -32,14 +49,10 @@ class GetMsg extends React.Component {
             type="submit"
             value="응원메세지 작성하기"
             onClick={() => {
-              axios({
-                url: 'http://15.164.164.204:4000/message/getMessage',
-                method: 'get',
-              }).then(res => {
-                console.log(res.data.data.id);
-              });
+              history.push('/sendmsg');
             }}
           />
+          {/* <Button variant="contained">응원 메세지 보내기</Button> */}
         </div>
       </div>
     );
