@@ -15,7 +15,7 @@ class GetMsg extends React.Component {
       method: 'get',
       url: 'http://15.164.164.204:4000/message/getMessage',
     }).then(res => {
-      console.log(res.data.data);
+      console.log(this.props.isLogin);
       this.setState({
         text: res.data.data.inputText,
       });
