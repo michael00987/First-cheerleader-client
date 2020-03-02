@@ -102,7 +102,7 @@ function Signup({ history }) {
     })
       .then(res => {
         alert(res.data.id + '번째 회원님 환영합니다');
-        history.push('/getmsg');
+        history.push('/login');
       })
       .catch(err => console.log(err));
   }
@@ -249,10 +249,10 @@ function Signup({ history }) {
                     color="primary"
                     className={classes.submit}
                     value="Sign Up"
-                    onClick={() => {
-                      alert('회원가입 성공');
-                      handleSubmit();
-                    }}
+                    onClick={
+                      // alert('회원가입 성공')
+                      handleSubmit
+                    }
                   >
                     Sign Up
                   </Button>
