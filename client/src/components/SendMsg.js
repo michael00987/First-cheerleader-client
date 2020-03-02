@@ -83,7 +83,11 @@ function SendMsg({ history }) {
         inputText: value,
       },
     }).then(res => {
-      console.log('잘 넘어가나요?:', res);
+      if (res.data.id) {
+        history.push('/getMsg');
+      } else {
+        alert('중복되는 메세지가 있습니다.');
+      }
     });
   }
   /*************************************************/
