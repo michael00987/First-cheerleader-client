@@ -1,68 +1,127 @@
-import React from 'react';
-// import './App.css';
-// import { Switch, Route } from 'react-router-dom';
-import { withRouter, Link, useHistory } from 'react-router-dom';
-import '../css/Signup.css';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+// import { grey } from '@material-ui/core/colors';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box'; // *** 제일 마지막에 import 해야 적용됨
 
 axios.defaults.withCredentials = true;
 
-class Signup extends React.Component {
-  constructor(props) {
-    super(props);
+// material-ui/style
+const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100vh',
+  },
+  image: {
+    backgroundImage:
+      'url(https://source.unsplash.com/user/hy0212/likes/800x700)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'dark'
+        ? theme.palette.grey[900]
+        : theme.palette.grey[50],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  hidden: {
+    display: 'none',
+  },
+}));
 
-    this.state = {
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      username: '',
-    };
-
-    this.handleInputValue = this.handleInputValue.bind(this);
-    this.handleInputReset = this.handleInputReset.bind(this);
-  }
+// Signup
+function Signup({ history }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setConfirm] = useState('');
+  const [username, setUsername] = useState('');
 
   /*************************** 인풋 관리 ****************************/
-  // 변수 값을 키로 사용
-  // (ref: https://developer.mozilla.org/en-US/docs/Web/API/Event/target)
-  handleInputValue = key => e => {
-    this.setState({ [key]: e.target.value });
-  };
+  function handleInputEmail(e) {
+    setEmail(e.target.value);
+  }
 
-  handleInputReset(e) {
+  function handleInputPassword(e) {
+    setPassword(e.target.value);
+  }
+
+  function handleInputConfirm(e) {
+    setConfirm(e.target.value);
+  }
+
+  function handleInputUsername(e) {
+    setUsername(e.target.value);
+  }
+
+  function handleInputReset(e) {
     // 페이지 리로딩 방지
     e.preventDefault();
-    // console.log('reset');
     // 상태 초기화
-    this.setState({
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      username: '',
-    });
+    setEmail('');
+    setPassword('');
+    setConfirm('');
+    setUsername('');
   }
-  /*******************************************************************/
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios({
+      method: 'post',
+      url: 'http://15.164.164.204:4000/user/signup',
+      data: {
+        email: email,
+        password: password,
+        username: username,
+      },
+    })
+      .then(res => {
+        alert(res.data.id + '번째 회원님 환영합니다');
+        history.push('/getmsg');
+      })
+      .catch(err => console.log(err));
+  }
 
   /*************************** 패스워드 일치 ****************************/
 
-  doesPasswordMatch() {
-    const { password, passwordConfirm } = this.state;
+  function doesPasswordMatch() {
     return password === passwordConfirm;
   }
 
-  passwordConfirm() {
-    const { passwordConfirm } = this.state;
-
+  function passwordConf() {
     if (passwordConfirm) {
       return this.doesPasswordMatch() ? 'is-valid' : 'is-invalid';
     }
   }
 
-  renderFeedbackMessage() {
-    const { passwordConfirm } = this.state;
-
-    if (passwordConfirm) {
-      if (!this.doesPasswordMatch()) {
+  function renderFeedbackMessage() {
+    if (passwordConf) {
+      if (!doesPasswordMatch()) {
         return (
           <div className="invalid-feedback">패스워드가 일치하지 않습니다</div>
         );
@@ -70,106 +129,141 @@ class Signup extends React.Component {
     }
   }
   /*********************************************************************/
+  const classes = useStyles();
+  return (
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
 
-  render() {
-    const { email, password, passwordConfirm, username } = this.state;
-    // const { handleIsLogin } = this.props;
-    const { history } = this.props;
-    // console.log('email: ', email);
-    return (
-      <div className="signup">
-        <div>회원 가입</div>
-        <div>
-          <img src="https://source.unsplash.com/user/hy0212/likes/400x300" />
-        </div>
-        <div>
-          <div className="title">
-            <div>ID(e-mail):</div>
-            <input
-              className="input_contants"
-              type="email"
-              placeholder="이메일을 입력 하세요"
-              onChange={this.handleInputValue('email')}
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
               value={email}
+              onChange={handleInputEmail}
             />
-          </div>
 
-          <div className="title">
-            <div>Password:</div>
-            <input
-              className="input_contants"
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              name="password"
+              label="Password"
               type="password"
-              placeholder="비밀번호를 입력 하세요"
-              onChange={this.handleInputValue('password')}
+              autoComplete="current-password"
               value={password}
+              onChange={handleInputPassword}
             />
-          </div>
 
-          <div className="title">
-            <div>Comfirm:</div>
-            <input
-              className="input_contants"
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="passwordConfirm"
+              name="passwordConfirm"
+              label="PasswordConfirm"
               type="password"
-              placeholder="비밀번호를 다시 입력 하세요"
-              onChange={this.handleInputValue('passwordConfirm')}
+              autoComplete="current-password"
               value={passwordConfirm}
+              onChange={handleInputConfirm}
             />
-            <div className="feedback">{this.renderFeedbackMessage()}</div>
-          </div>
+            <div className="feedback">{renderFeedbackMessage()}</div>
 
-          <div className="title">
-            <div>Username:</div>
-            <input
-              className="input_contants"
-              placeholder="이름을 입력 하세요"
-              onChange={this.handleInputValue('username')}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              name="username"
+              label="Username"
+              type="text"
+              autoComplete="username"
               value={username}
+              onChange={handleInputUsername}
             />
-          </div>
 
-          <div>
-            <div className="Buttens_frame">
-              <input
-                className="button"
-                type="submit"
-                value="취소"
-                onClick={() => history.push('/login')}
-              />
-              <input
-                className="button"
-                type="submit"
-                value="회원가입"
-                onClick={e => {
-                  e.preventDefault();
-                  axios({
-                    method: 'post',
-                    url: 'http://15.164.164.204:4000/user/signup',
-                    data: {
-                      email: this.state.email,
-                      username: this.state.username,
-                      password: this.state.password,
-                    },
-                  })
-                    .then(res => {
-                      alert(res.data.id + '번째 회원님 환영합니다');
-                      history.push('/getmsg');
-                    })
-                    .catch(err => console.log(err));
-                }}
-              />
-              <input
-                className="button"
-                type="text/css"
-                type="submit"
-                value="다시작성"
-                onClick={this.handleInputReset}
-              />
-            </div>
-          </div>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Box
+                  mt={1}
+                  color="primary.main"
+                  component="span"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Button onClick={() => history.push('/login')}>취소</Button>
+                </Box>
+              </Grid>
+
+              <Grid item xs={6}>
+                <Box
+                  mt={1}
+                  color="primary.main"
+                  component="span"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Button onClick={handleInputReset}>다시 작성</Button>
+                  {/*}
+                  <Button
+                    type="submit"
+                    // fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    value="다시 작성"
+                    onClick={handleInputReset}
+                  >
+                    다시 작성
+                  </Button>
+                 */}
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    value="Sign Up"
+                    onClick={() => {
+                      alert('회원가입 성공');
+                      handleSubmit();
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </Box>
+              </Grid>
+            </Grid>
+          </form>
         </div>
-      </div>
-    );
-  }
+      </Grid>
+    </Grid>
+  );
 }
 
 export default withRouter(Signup);
