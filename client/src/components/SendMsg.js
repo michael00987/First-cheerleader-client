@@ -74,14 +74,16 @@ function SendMsg({ history }) {
     }
   }
 
-  function handleSubmit(e) {
+  function handleSubmit() {
     // e.preventDefault();
     axios({
       method: 'post',
-      url: 'http://15.164.164.204:4000/user/sendMessage',
+      url: 'http://15.164.164.204:4000/message/sendMessage',
       data: {
-        value: value,
+        inputText: value,
       },
+    }).then(res => {
+      console.log('잘 넘어가나요?:', res);
     });
   }
   /*************************************************/
@@ -122,9 +124,10 @@ function SendMsg({ history }) {
                         alignItems="center"
                         justifyContent="center"
                         name="contents"
-                        value={value}
                         onChange={handleInputValue}
-                      ></Textfield>
+                      >
+                        {value}
+                      </Textfield>
                       <div className="countText">
                         <span className="currCount">{countText}</span>
                         <span>/</span>
@@ -140,16 +143,19 @@ function SendMsg({ history }) {
                   color="primary"
                   type="submit"
                   fullWidth
-                  value="응원메세지 작성"
-                  onClick={() => {
-                    if (value.length > 0) {
-                      alert('메세지 전송');
-                      handleSubmit();
-                      history.push('/getmsg');
-                    } else {
-                      console.log('빈칸 인데?');
-                    }
-                  }}
+                  // value="응원메세지 작성"
+                  onClick={
+                    handleSubmit
+                    //   () => {
+                    //   if (value.length > 0) {
+                    //     handleSubmit();
+                    //     console.log('메세지 전송');
+                    //     // history.push('/getmsg');
+                    //   } else {
+                    //     console.log('빈칸 인데?');
+                    //   }
+                    // }
+                  }
                 >
                   응원메세지 작성
                 </Button>

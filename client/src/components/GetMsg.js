@@ -68,7 +68,7 @@ function GetMsg({ history }) {
       method: 'get',
       url: 'http://15.164.164.204:4000/message/getMessage',
     }).then(res => {
-      console.log(res.data.data.inputText);
+      // console.log(res.data.data.inputText);
       setText(res.data.data.inputText);
     });
   }, []);
@@ -97,23 +97,24 @@ function GetMsg({ history }) {
               <CardContent>
                 <Grid container spacing={3}>
                   <div className={classes.cardContent}>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <Typography
                         // component="div"
                         style={{ height: '50vh' }}
                         component="h1"
                         variant="h5"
                         // color="textPrimary"
-                      ></Typography>
-                    </Grid>
+                      ></Typography> 
+                    </Grid> */}
                     <Grid item xs={12}>
                       <Box
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
                         name="contents"
-                        value={text}
-                      ></Box>
+                      >
+                        {text}
+                      </Box>
                     </Grid>
                   </div>
                 </Grid>
@@ -134,7 +135,7 @@ function GetMsg({ history }) {
           </Grid>
         </Grid>
       </Container>
-      {console.log('나는 리턴!!!!!')}
+      {/* {console.log('나는 리턴!!!!!')} */}
       {/*
       <div className="navigation">
         <div>
