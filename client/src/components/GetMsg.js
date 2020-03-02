@@ -69,7 +69,7 @@ const theme = createMuiTheme({
 }); */
 
 // GetMsg
-function GetMsg({ history }) {
+function GetMsg({ isLogin, history }) {
   const [text, setText] = useState('');
 
   useEffect(() => {
@@ -83,64 +83,68 @@ function GetMsg({ history }) {
   // }, [text]);
 
   const classes = useStyles();
-  return (
-    <div className="getMsg">
-      <CssBaseline />
-      <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="flex-end">
+  if (!isLogin) {
+    return <div>not found</div>;
+  } else {
+    return (
+      <div className="getMsg">
+        <CssBaseline />
+        <Container maxWidth="md" component="main">
+          <Grid container spacing={5} alignItems="flex-end">
+            <Grid item xs={12}>
+              <Card>
+                <CardHeader
+                  titleTypographyProps={{ align: 'center' }}
+                  className={classes.cardHeader}
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title="Message Page"
+                ></CardHeader>
+
+                <CardContent>
+                  <Grid container spacing={1}>
+                    <div className={classes.cardContent}>
+                      <Grid item xs={12}>
+                        <Box m="auto" name="contents" style={{ fontSize: 15 }}>
+                          {text}
+                        </Box>
+                      </Grid>
+                    </div>
+                  </Grid>
+                </CardContent>
+
+                <CardActions>
+                  <Button
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    value="응원메세지 작성"
+                    onClick={() => history.push('/sendmsg')}
+                  >
+                    응원메세지 작성하러 가기
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
+        <Grid container spacing={5}>
           <Grid item xs={12}>
-            <Card>
-              <CardHeader
-                titleTypographyProps={{ align: 'center' }}
-                className={classes.cardHeader}
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                title="Message Page"
-              ></CardHeader>
-
-              <CardContent>
-                <Grid container spacing={1}>
-                  <div className={classes.cardContent}>
-                    <Grid item xs={12}>
-                      <Box m="auto" name="contents" style={{ fontSize: 15 }}>
-                        {text}
-                      </Box>
-                    </Grid>
-                  </div>
-                </Grid>
-              </CardContent>
-
-              <CardActions>
-                <Button
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  value="응원메세지 작성"
-                  onClick={() => history.push('/sendmsg')}
-                >
-                  응원메세지 작성하러 가기
-                </Button>
-              </CardActions>
-            </Card>
+            <BottomNavigation showLabels className={classes.bottom}>
+              <BottomNavigationAction
+                label=""
+                value="favorites"
+                icon={<FavoriteIcon />}
+              />
+            </BottomNavigation>
           </Grid>
         </Grid>
-      </Container>
-      <Grid container spacing={5}>
-        <Grid item xs={12}>
-          <BottomNavigation showLabels className={classes.bottom}>
-            <BottomNavigationAction
-              label=""
-              value="favorites"
-              icon={<FavoriteIcon />}
-            />
-          </BottomNavigation>
-        </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default withRouter(GetMsg);

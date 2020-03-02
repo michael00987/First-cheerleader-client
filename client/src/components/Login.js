@@ -66,9 +66,7 @@ function Login({ handleIsLogin, history }) {
   function handleInputPassword(e) {
     setPassword(e.target.value);
   }
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log('로그인 시도');
+  function handleSubmit() {
     axios({
       method: 'post',
       url: 'http://15.164.164.204:4000/user/signin',
@@ -76,13 +74,11 @@ function Login({ handleIsLogin, history }) {
         email: email,
         password: password,
       },
-    })
-      .then(() => {
-        console.log('post 요청');
-        handleIsLogin();
-        history.push('/getmsg');
-      })
-      .catch(err => console.log(err));
+    }).then(() => {
+      handleIsLogin();
+      history.push('/getmsg');
+    });
+    // .catch(err => console.log(err));
   }
 
   const classes = useStyles();
@@ -151,10 +147,10 @@ function Login({ handleIsLogin, history }) {
                     color="primary"
                     className={classes.submit}
                     value="Sign In"
-                    onClick={
-                      // alert('로그인 성공');
-                      handleSubmit
-                    }
+                    onClick={e => {
+                      e.preventDefault();
+                      handleSubmit();
+                    }}
                   >
                     Sign In
                   </Button>
