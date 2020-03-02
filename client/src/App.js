@@ -47,7 +47,7 @@ function App() {
     setModal(false);
   }
   // function UserInfo() {
-  //   if (!isLogin) {   // isLogin 코드 수정 후에 ! 를 삭제해주세요
+  //   if (!isLogin) { // isLogin 코드 수정 후에 ! 를 삭제해주세요
   //     return (
   //       <div>
   //         <DialogTitle>사용자 정보</DialogTitle>
@@ -104,11 +104,11 @@ function App() {
           </Toolbar>
         </AppBar>
       </div>
-      {/* <div className="모달창">
+      <div className="모달창">
         <Dialog open={modal} onClose={handleCloseModal}>
           <UserInfo />
         </Dialog>
-      </div> */}
+      </div>
       <Switch>
         <Route
           exact
