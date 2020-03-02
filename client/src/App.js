@@ -36,7 +36,7 @@ function App() {
   const [modal, setModal] = useState(false);
 
   function handleIsLogin() {
-    // 이 메서드가 정상작동하면 ㅕㄴㄷㄱ
+    console.log('aa');
     setIsLogin(true);
   }
 
@@ -47,8 +47,7 @@ function App() {
     setModal(false);
   }
   function UserInfo() {
-    if (!isLogin) {
-      // isLogin 코드 수정 후에 ! 를 삭제해주세요
+    if (isLogin) {
       return (
         <div>
           <DialogTitle>사용자 정보</DialogTitle>
@@ -115,29 +114,23 @@ function App() {
           exact
           path="/login"
           render={() => (
-            <Login isLogin={isLogin} handleIsLogin={() => handleIsLogin} />
+            <Login isLogin={isLogin} handleIsLogin={handleIsLogin} />
           )}
         />
         <Route
           exact
           path="/signup"
-          render={() => (
-            <Signup isLogin={isLogin} handleIsLogin={() => handleIsLogin} />
-          )}
+          render={() => <Signup isLogin={isLogin} />}
         />
         <Route
           exact
           path="/getmsg"
-          render={() => (
-            <GetMsg isLogin={isLogin} handleIsLogin={() => handleIsLogin} />
-          )}
+          render={() => <GetMsg isLogin={isLogin} />}
         />
         <Route
           exact
           path="/sendmsg"
-          render={() => (
-            <SendMsg isLogin={isLogin} handleIsLogin={() => handleIsLogin} />
-          )}
+          render={() => <SendMsg isLogin={isLogin} />}
         />
         <Route
           path="/"
