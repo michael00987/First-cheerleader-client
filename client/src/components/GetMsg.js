@@ -17,7 +17,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 
 axios.defaults.withCredentials = true;
 
@@ -42,10 +42,9 @@ const useStyles = makeStyles(theme => ({
         : theme.palette.grey[200],
   },
   cardContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    marginBottom: theme.spacing(2),
+    display: 'block', // 한 줄 차지
+    width: '30vw',
+    height: '40vw',
   },
   bottom: {
     display: 'flex',
@@ -59,6 +58,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/*
+const theme = createMuiTheme({
+  palette: {
+    primary: '#bdbdbd',
+  },
+  typography: {
+    fontSize: 15,
+  },
+}); */
+
 // GetMsg
 function GetMsg({ history }) {
   const [text, setText] = useState('');
@@ -68,7 +77,6 @@ function GetMsg({ history }) {
       method: 'get',
       url: 'http://15.164.164.204:4000/message/getMessage',
     }).then(res => {
-      // console.log(res.data.data.inputText);
       setText(res.data.data.inputText);
     });
   }, []);
@@ -81,7 +89,6 @@ function GetMsg({ history }) {
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
           <Grid item xs={12}>
-            {/* <Card className={classes.root} variant="outlined"> */}
             <Card>
               <CardHeader
                 titleTypographyProps={{ align: 'center' }}
@@ -95,24 +102,10 @@ function GetMsg({ history }) {
               ></CardHeader>
 
               <CardContent>
-                <Grid container spacing={3}>
+                <Grid container spacing={1}>
                   <div className={classes.cardContent}>
-                    {/* <Grid item xs={12}>
-                      <Typography
-                        // component="div"
-                        style={{ height: '50vh' }}
-                        component="h1"
-                        variant="h5"
-                        // color="textPrimary"
-                      ></Typography> 
-                    </Grid> */}
                     <Grid item xs={12}>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        name="contents"
-                      >
+                      <Box m="auto" name="contents" style={{ fontSize: 15 }}>
                         {text}
                       </Box>
                     </Grid>
@@ -135,37 +128,6 @@ function GetMsg({ history }) {
           </Grid>
         </Grid>
       </Container>
-      {/* {console.log('나는 리턴!!!!!')} */}
-      {/*
-      <div className="navigation">
-        <div>
-          <input className="to_CheerBtn" value="로그아웃" type="submit" />
-        </div>
-        <div className="title">Message Page</div>
-        <div>
-          <input className="to_CheerBtn" value="나의정보" type="submit" />
-        </div>
-      </div>
-      <div className="body">
-        <textarea
-          className="contents"
-          type="text"
-          cols="70"
-          rows="30"
-          value={text}
-        />
-      </div>
-      <div>
-        <input
-          className="to_CheerBtn"
-          type="submit"
-          value="응원메세지 작성하기"
-          onClick={() => {
-            history.push('/sendmsg');
-          }}
-        />
-        {/* <Button variant="contained">응원 메세지 보내기</Button> 
-      </div>*/}
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <BottomNavigation showLabels className={classes.bottom}>

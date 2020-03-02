@@ -18,7 +18,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 // import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 
 axios.defaults.withCredentials = true;
 
@@ -44,10 +44,9 @@ const useStyles = makeStyles(theme => ({
         : theme.palette.grey[200],
   },
   cardContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    marginBottom: theme.spacing(2),
+    display: 'block', // 한 줄 차지
+    width: '100vw',
+    height: '40vw',
   },
   bottom: {
     display: 'flex',
@@ -60,6 +59,16 @@ const useStyles = makeStyles(theme => ({
         : theme.palette.grey[50],
   },
 }));
+
+/*
+const theme = createMuiTheme({
+  palette: {
+    primary: '#bdbdbd',
+  },
+  typography: {
+    fontSize: 15,
+  },
+}); */
 
 // SendMsg
 function SendMsg({ history }) {
@@ -115,19 +124,14 @@ function SendMsg({ history }) {
                 <Grid container spacing={3}>
                   <div className={classes.cardContent} variant="outlined">
                     <Grid item xs={12}>
-                      <Typography
-                        style={{ height: '50vh' }}
-                        component="h1"
-                        variant="h5"
-                        color="textPrimary"
-                      ></Typography>
-                    </Grid>
-                    <Grid item xs={12}>
                       <Textfield
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
+                        m="auto"
+                        fullWidth
                         name="contents"
+                        multiline
+                        rows="20"
+                        defaultValue="응원 메세지를 입력하세요"
+                        variant="outlined"
                         onChange={handleInputValue}
                       >
                         {value}

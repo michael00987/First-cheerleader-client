@@ -46,33 +46,34 @@ function App() {
   function handleCloseModal() {
     setModal(false);
   }
-  // function UserInfo() {
-  //   if (!isLogin) {   // isLogin 코드 수정 후에 ! 를 삭제해주세요
-  //     return (
-  //       <div>
-  //         <DialogTitle>사용자 정보</DialogTitle>
-  //         <DialogContent>
-  //           <span>이름 :</span>
-  //           <span>김 삿갓</span>
-  //           <br />
-  //           <span>Email :</span>
-  //           <span>김 삿갓@satgat.com</span>
-  //           <br />
-  //           <Button>정보 수정</Button>
-  //           <Button
-  //             onClick={() => {
-  //               alert('진짜루?');
-  //             }}
-  //           >
-  //             회원 탈퇴
-  //           </Button>
-  //         </DialogContent>
-  //       </div>
-  //     );
-  //   } else {
-  //     return <DialogTitle>로그인</DialogTitle>;
-  //   }
-  // }
+  function UserInfo() {
+    if (!isLogin) {
+      // isLogin 코드 수정 후에 ! 를 삭제해주세요
+      return (
+        <div>
+          <DialogTitle>사용자 정보</DialogTitle>
+          <DialogContent>
+            <span>이름 :</span>
+            <span>김 삿갓</span>
+            <br />
+            <span>Email :</span>
+            <span>김 삿갓@satgat.com</span>
+            <br />
+            <Button>정보 수정</Button>
+            <Button
+              onClick={() => {
+                alert('진짜루?');
+              }}
+            >
+              회원 탈퇴
+            </Button>
+          </DialogContent>
+        </div>
+      );
+    } else {
+      return <DialogTitle>로그인</DialogTitle>;
+    }
+  }
 
   const classes = useStyles();
   return (
@@ -104,11 +105,11 @@ function App() {
           </Toolbar>
         </AppBar>
       </div>
-      {/* <div className="모달창">
+      <div className="모달창">
         <Dialog open={modal} onClose={handleCloseModal}>
           <UserInfo />
         </Dialog>
-      </div> */}
+      </div>
       <Switch>
         <Route
           exact
