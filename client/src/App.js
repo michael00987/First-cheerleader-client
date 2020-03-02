@@ -15,6 +15,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import GetMsg from './components/GetMsg';
 import SendMsg from './components/SendMsg';
+import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 // import axios from 'axios';
 
 // material-ui/style
@@ -32,10 +33,46 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [modal, setModal] = useState(false);
 
   function handleIsLogin() {
+    // 이 메서드가 정상작동하면 ㅕㄴㄷㄱ
     setIsLogin(true);
   }
+
+  function handleOpenModal() {
+    setModal(true);
+  }
+  function handleCloseModal() {
+    setModal(false);
+  }
+  // function UserInfo() {
+  //   if (!isLogin) {   // isLogin 코드 수정 후에 ! 를 삭제해주세요
+  //     return (
+  //       <div>
+  //         <DialogTitle>사용자 정보</DialogTitle>
+  //         <DialogContent>
+  //           <span>이름 :</span>
+  //           <span>김 삿갓</span>
+  //           <br />
+  //           <span>Email :</span>
+  //           <span>김 삿갓@satgat.com</span>
+  //           <br />
+  //           <Button>정보 수정</Button>
+  //           <Button
+  //             onClick={() => {
+  //               alert('진짜루?');
+  //             }}
+  //           >
+  //             회원 탈퇴
+  //           </Button>
+  //         </DialogContent>
+  //       </div>
+  //     );
+  //   } else {
+  //     return <DialogTitle>로그인</DialogTitle>;
+  //   }
+  // }
 
   const classes = useStyles();
   return (
@@ -60,12 +97,18 @@ function App() {
               aria-controls="primary-search-account-menu"
               aria-haspopup="true"
               color="inherit"
+              onClick={handleOpenModal}
             >
               <AccountCircle />
             </IconButton>
           </Toolbar>
         </AppBar>
       </div>
+      {/* <div className="모달창">
+        <Dialog open={modal} onClose={handleCloseModal}>
+          <UserInfo />
+        </Dialog>
+      </div> */}
       <Switch>
         <Route
           exact
@@ -99,6 +142,7 @@ function App() {
           path="/"
           render={() => {
             if (isLogin) {
+              console.log('?????');
               return <Redirect to="/getmsg" />;
             }
             return <Redirect to="/login" />;
