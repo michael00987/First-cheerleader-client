@@ -13,9 +13,12 @@ import Textfield from '@material-ui/core/Textfield';
 import { BottomNavigation } from '@material-ui/core';
 import { BottomNavigationAction } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import Container from '@material-ui/core/Container';
 // import Box from '@material-ui/core/Box';
 // import Typography from '@material-ui/core/Typography';
@@ -32,10 +35,13 @@ const useStyles = makeStyles(theme => ({
     },
   },
   root: {
+    width: 300,
+    height: 300,
+    /*
     display: 'flex',
     justifyContent: 'center',
     height: 56,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper, */
   },
   cardHeader: {
     backgroundColor:
@@ -46,7 +52,8 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     display: 'block', // 한 줄 차지
     width: '100vw',
-    height: '40vw',
+    height: '60vw',
+    // fontSize: '20pt',
   },
   bottom: {
     display: 'flex',
@@ -60,15 +67,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-/*
 const theme = createMuiTheme({
   palette: {
-    primary: '#bdbdbd',
+    primary: {
+      main: '#388e3c',
+    },
+    secondary: {
+      main: '#11cb5f',
+    },
   },
-  typography: {
-    fontSize: 15,
-  },
-}); */
+});
 
 // SendMsg
 function SendMsg({ history }) {
@@ -99,6 +107,11 @@ function SendMsg({ history }) {
       }
     });
   }
+
+  // 뒤로가기
+  function handleBack() {
+    history.goBack();
+  }
   /*************************************************/
 
   const classes = useStyles();
@@ -106,7 +119,7 @@ function SendMsg({ history }) {
     <div className="sendMsg">
       <CssBaseline />
       <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignitems="flex-end">
+        <Grid container spacing={5}>
           <Grid item xs={12}>
             <Card>
               <CardHeader
@@ -114,29 +127,37 @@ function SendMsg({ history }) {
                 className={classes.cardHeader}
                 title="Send Message Page"
                 action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
+                  <IconButton aria-label="back" size="small">
+                    <ArrowBackIcon onClick={handleBack} />
                   </IconButton>
                 }
               />
 
               <CardContent>
-                <Grid container spacing={3}>
-                  <div className={classes.cardContent} variant="outlined">
+                <Grid
+                  container
+                  spacing={3}
+                  align="center"
+                  justify="center"
+                  alignItems="center" // *** align center>
+                >
+                  <div className={classes.cardContent}>
+                    {/* variant="outlined" */}
                     <Grid item xs={12}>
                       <Textfield
                         m="auto"
                         fullWidth
                         name="contents"
                         multiline
-                        rows="20"
-                        defaultValue="응원 메세지를 입력하세요"
+                        rows="25"
+                        area-label="응원 메세지를 입력하세요"
                         variant="outlined"
                         onChange={handleInputValue}
                       >
                         {value}
                       </Textfield>
-                      <div className="countText">
+
+                      <div className="countText" style={{ fontSize: '11pt' }}>
                         <span className="currCount">{countText}</span>
                         <span>/</span>
                         <span className="MaxCount">최대 150자</span>
@@ -147,26 +168,29 @@ function SendMsg({ history }) {
               </CardContent>
 
               <CardActions>
-                <Button
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  // value="응원메세지 작성"
-                  onClick={
-                    handleSubmit
-                    //   () => {
-                    //   if (value.length > 0) {
-                    //     handleSubmit();
-                    //     console.log('메세지 전송');
-                    //     // history.push('/getmsg');
-                    //   } else {
-                    //     console.log('빈칸 인데?');
-                    //   }
-                    // }
-                  }
-                >
-                  응원메세지 작성
-                </Button>
+                <ThemeProvider theme={theme}>
+                  <Button
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    value="응원메세지 작성"
+                    style={{ fontSize: '17px' }}
+                    onClick={
+                      handleSubmit
+                      //   () => {
+                      //   if (value.length > 0) {
+                      //     handleSubmit();
+                      //     console.log('메세지 전송');
+                      //     // history.push('/getmsg');
+                      //   } else {
+                      //     console.log('빈칸 인데?');
+                      //   }
+                      // }
+                    }
+                  >
+                    응원메세지 작성
+                  </Button>
+                </ThemeProvider>
               </CardActions>
             </Card>
           </Grid>
@@ -175,74 +199,12 @@ function SendMsg({ history }) {
 
       <Grid container spacing={5}>
         <Grid item xs={12}>
-          <BottomNavigation showLabels className={classes.bottom}>
-            <BottomNavigationAction
-              label=""
-              value="favorites"
-              icon={<FavoriteIcon />}
-            />
+          <BottomNavigation className={classes.bottom}>
+            <BottomNavigationAction value="favorites" icon={<FavoriteIcon />} />
           </BottomNavigation>
         </Grid>
       </Grid>
     </div>
-
-    /*
-    <div className="sendMessage">
-      <div className="navigation">
-        <div>
-          <input className="to_CheerBtn" value="로그아웃" type="submit" />
-        </div>
-        <div className="title">메세지 보내기</div>
-        <div>
-          <input className="to_CheerBtn" value="나의정보" type="submit" />
-        </div>
-      </div>
-      <div className="body">
-        <div>
-          <span className="header">응원하고 싶은 메세지를 입력하세요</span>
-        </div>
-        <div>
-          <textarea
-            name="text"
-            type="text"
-            placeholder="응원하고 싶은 메세지를 입력하세요"
-            cols="70"
-            rows="30"
-            value={this.state.value}
-            onChange={this.handleInputValue}
-          />
-          <div className="countText">
-            <span className="currCount">{countText}</span>
-            <span>/</span>
-            <span className="MaxCount">최대 150자</span>
-          </div>
-        </div>
-      </div>
-      <div className="btns">
-        <input
-          className="sendBtn"
-          type="submit"
-          value="응원보내기"
-          onClick={() => {
-            if (value.length > 0) {
-              alert('성공적을 전송하였습니다.');
-              this.handleSubmit();
-              history.push('/getmsg');
-            } else {
-              console.log('빈칸 인데?');
-            }
-          }}
-        />
-        <input
-          className="backBtn"
-          type="submit"
-          value="돌아가기"
-          onClick={() => {
-            history.push('/getmsg');
-          }}
-        />
-      </div>
-        </div> */
   );
 }
 
