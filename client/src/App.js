@@ -59,7 +59,6 @@ function App({ history }) {
   }
 
   function handleLogout() {
-    setIsLogin(false);
     axios({
       method: 'post',
       url: 'http://15.164.164.204:4000/user/logout',
@@ -67,6 +66,11 @@ function App({ history }) {
   }
 
   useEffect(() => {
+    if (window.sessionStorage.getItem('email')) {
+      // 새션에 있는지 확인하고 있으면 로그인 상태로 바꾸고 루트로 보냄 ==> 루트로 보내도 getmsg로 이동함
+      handleIsLogin();
+      history.push('/');
+    }
     axios({
       method: 'get',
       url: 'http://15.164.164.204:4000/user/info',
@@ -92,7 +96,6 @@ function App({ history }) {
             <Button
               onClick={() => {
                 handleSignout();
-                handleCloseModal();
                 history.push('/');
               }}
             >
@@ -126,8 +129,9 @@ function App({ history }) {
             <Button
               color="inherit"
               onClick={() => {
-                handleLogout();
-                handleCloseModal();
+                handleLogout(); // 로그아웃을 누르려면 모달이 비활성화 되야하기때문에 modalClose는 필요없음
+                window.sessionStorage.setItem('email', null); // 저장된 세션스토리지를 비우고 로그인으로 이동
+                setIsLogin(false);
                 history.push('/');
               }}
             >
@@ -163,16 +167,8 @@ function App({ history }) {
           path="/signup"
           render={() => <Signup isLogin={isLogin} />}
         />
-        <Route
-          exact
-          path="/getmsg"
-          render={() => <GetMsg isLogin={isLogin} />}
-        />
-        <Route
-          exact
-          path="/sendmsg"
-          render={() => <SendMsg isLogin={isLogin} />}
-        />
+        <Route path="/getmsg" render={() => <GetMsg isLogin={isLogin} />} />
+        <Route path="/sendmsg" render={() => <SendMsg isLogin={isLogin} />} />
         <Route
           path="/"
           render={() => {

@@ -76,11 +76,17 @@ function Login({ handleIsLogin, history }) {
       },
     }).then(() => {
       handleIsLogin();
-      history.push('/getmsg');
+      doSignUp(); // 로그인하면 세션스토리지에 저장하고 루트로 보냄 => 루트로 나가지만 App.js 랜더 설정으로 /getmsg로 이동
     });
     // .catch(err => console.log(err));
   }
-
+  /******************* 세션 스토리지에 저장해서 브자우저가 켜져 있는 동안에만 유지 */
+  function doSignUp() {
+    window.sessionStorage.setItem('email', email);
+    handleIsLogin();
+    history.push('/');
+  }
+  /****************************************************************** */
   const classes = useStyles();
   return (
     <Grid container component="main" className={classes.root}>
