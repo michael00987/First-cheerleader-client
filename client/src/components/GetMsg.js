@@ -14,8 +14,12 @@ import { BottomNavigationAction } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import Box from '@material-ui/core/Box';
 // import Typography from '@material-ui/core/Typography';
 
@@ -44,8 +48,9 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     display: 'block', // 한 줄 차지
     width: '30vw',
-    height: '40vw',
+    height: '50vw',
   },
+  cardAction: {},
   bottom: {
     display: 'flex',
     justifyContent: 'center',
@@ -58,19 +63,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-/*
 const theme = createMuiTheme({
   palette: {
-    primary: '#bdbdbd',
+    primary: {
+      main: '#388e3c',
+    },
+    secondary: {
+      main: '#11cb5f',
+    },
   },
-  typography: {
-    fontSize: 15,
-  },
-}); */
+});
 
 // GetMsg
 function GetMsg({ isLogin, history }) {
   const [text, setText] = useState('');
+  const [date, setDate] = useState('');
 
   useEffect(() => {
     axios({
@@ -78,55 +85,108 @@ function GetMsg({ isLogin, history }) {
       url: 'http://15.164.164.204:4000/message/getMessage',
     }).then(res => {
       setText(res.data.data.inputText);
+      setDate(res.data.data.createdAt);
     });
   }, []);
   // }, [text]);
 
+  // 뒤로가기
+  function handleBack() {
+    history.goBack();
+  }
+
   const classes = useStyles();
   if (!isLogin) {
-    return <div>not found</div>;
+    return (
+      <div>
+        <div
+          style={{
+            fontSize: 50,
+            fontWeight: 'bold',
+            // color: 'red',
+            textAlign: 'center',
+            margin: '50px',
+          }}
+        >
+          Not Found
+        </div>
+
+        <div>
+          <IconButton style={{ align: 'center' }}>
+            <LockOutlinedIcon onClick={handleBack} size="large" />
+          </IconButton>
+        </div>
+      </div>
+    );
   } else {
     return (
       <div className="getMsg">
         <CssBaseline />
         <Container maxWidth="md" component="main">
-          <Grid container spacing={5} alignItems="flex-end">
+          <Grid container spacing={5} alignItems="flex-start">
             <Grid item xs={12}>
               <Card>
                 <CardHeader
                   titleTypographyProps={{ align: 'center' }}
                   className={classes.cardHeader}
+                  title="Message Page"
                   action={
-                    <IconButton aria-label="settings">
+                    <IconButton>
                       <MoreVertIcon />
                     </IconButton>
                   }
-                  title="Message Page"
                 ></CardHeader>
 
                 <CardContent>
-                  <Grid container spacing={1}>
-                    <div className={classes.cardContent}>
+                  <Grid
+                    container
+                    spacing={3}
+                    align="center"
+                    justify="center"
+                    alignItems="center" // *** align center>
+                  >
+                    <div className={classes.cardContent} variant="outlined">
                       <Grid item xs={12}>
-                        <Box m="auto" name="contents" style={{ fontSize: 15 }}>
+                        <Box
+                          m="auto"
+                          name="contents"
+                          style={{ fontSize: '20pt' }}
+                        >
                           {text}
+                        </Box>
+                        <Box
+                          m="auto"
+                          name="contents"
+                          style={{
+                            fontSize: 15,
+                            fontStyle: 'italic',
+                            float: 'right',
+                            padding: '20px',
+                          }}
+                        >
+                          {date.slice(0, 10)}
                         </Box>
                       </Grid>
                     </div>
                   </Grid>
                 </CardContent>
 
-                <CardActions>
-                  <Button
-                    color="primary"
-                    type="submit"
-                    fullWidth
-                    value="응원메세지 작성"
-                    onClick={() => history.push('/sendmsg')}
-                  >
-                    응원메세지 작성하러 가기
-                  </Button>
-                </CardActions>
+                <Grid item xs={12}>
+                  <CardActions className={classes.cardAction}>
+                    <ThemeProvider theme={theme}>
+                      <Button
+                        color="primary"
+                        type="submit"
+                        fullWidth
+                        value="응원메세지 작성하러 가기"
+                        style={{ fontSize: '17px' }}
+                        onClick={() => history.push('/sendmsg')}
+                      >
+                        응원메세지 작성하러 가기
+                      </Button>
+                    </ThemeProvider>
+                  </CardActions>
+                </Grid>
               </Card>
             </Grid>
           </Grid>
@@ -135,7 +195,6 @@ function GetMsg({ isLogin, history }) {
           <Grid item xs={12}>
             <BottomNavigation showLabels className={classes.bottom}>
               <BottomNavigationAction
-                label=""
                 value="favorites"
                 icon={<FavoriteIcon />}
               />
