@@ -6,10 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/styles';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -120,59 +121,68 @@ function Login({ handleIsLogin, history, storeCollector }) {
               Sign in
             </Typography>
 
-            <form className={classes.form} noValidate>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="Email Address"
-                autoFocus
-                value={email}
-                onChange={handleInputEmail}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={handleInputPassword}
-              />
+            <form className={classes.form}>
+              <ValidatorForm onSubmit={handleSubmit}>
+                <TextValidator
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  label="Email"
+                  autoFocus
+                  name="email"
+                  value={email}
+                  onChange={handleInputEmail}
+                  validators={['required', 'isEmail']}
+                  errorMessages={[
+                    'Enter your email',
+                    'Enter a valid email address',
+                  ]}
+                />
+                <TextValidator
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  label="Password"
+                  autoFocus
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={handleInputPassword}
+                  validators={['required']}
+                  errorMessages={['Enter your password']}
+                />
 
-              <Grid container spacing={2}>
-                <Grid item xs>
-                  <Box color="primary.main" component="span" pt={10}>
-                    <Button fullWidth onClick={() => history.push('/signup')}>
-                      아직 가입하지 않으셨나요?
-                    </Button>
-                  </Box>
+                <Grid container spacing={2}>
+                  <Grid item xs>
+                    <Box color="primary.main" component="span" pt={10}>
+                      <Button fullWidth onClick={() => history.push('/signup')}>
+                        아직 가입하지 않으셨나요?
+                      </Button>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
 
-              <Grid container spacing={2}>
-                <Grid item xs>
-                  <Box mx="auto">
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                      value="Sign In"
-                      onClick={e => {
-                        e.preventDefault();
-                        handleSubmit();
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                  </Box>
+                <Grid container spacing={2}>
+                  <Grid item xs>
+                    <Box mx="auto">
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        value="Sign In"
+                        // onClick={e => {
+                        //   e.preventDefault();
+                        //   handleSubmit();
+                        // }}
+                      >
+                        Sign In
+                      </Button>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </ValidatorForm>
             </form>
           </div>
         </Grid>

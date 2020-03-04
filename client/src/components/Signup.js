@@ -6,10 +6,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/styles';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -136,9 +137,7 @@ function Signup({ history }) {
   function renderFeedbackMessage() {
     if (passwordConf) {
       if (!doesPasswordMatch()) {
-        return (
-          <div className="invalid-feedback">패스워드가 일치하지 않습니다</div>
-        );
+        return <div className="invalid-feedback">Passwords must match</div>;
       }
     }
   }
@@ -158,97 +157,110 @@ function Signup({ history }) {
               Sign up
             </Typography>
 
-            <form className={classes.form} noValidate>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="Email Address"
-                autoFocus
-                value={email}
-                onChange={handleInputEmail}
-              />
+            <form className={classes.form}>
+              <ValidatorForm onSubmit={handleSubmit}>
+                <TextValidator
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  label="Email"
+                  autoFocus
+                  name="email"
+                  value={email}
+                  onChange={handleInputEmail}
+                  validators={['required', 'isEmail']}
+                  errorMessages={[
+                    'Enter your email',
+                    'Enter a valid email address',
+                  ]}
+                />
 
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={handleInputPassword}
-              />
+                <TextValidator
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  label="Password"
+                  autoFocus
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={handleInputPassword}
+                  validators={['required']}
+                  errorMessages={['Enter your password']}
+                />
+                <TextValidator
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  label="PasswordConfirm"
+                  autoFocus
+                  name="passwordConfirm"
+                  type="password"
+                  value={passwordConfirm}
+                  onChange={handleInputConfirm}
+                  validators={['required']}
+                  errorMessages={['Enter your password']}
+                />
+                <div
+                  className="feedback"
+                  style={{ color: 'red', fontStyle: 'italic' }}
+                >
+                  {renderFeedbackMessage()}
+                </div>
+                <TextValidator
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  label="Username"
+                  autoFocus
+                  name="username"
+                  value={username}
+                  onChange={handleInputUsername}
+                  validators={['required']}
+                  errorMessages={['Enter your name']}
+                />
 
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="PasswordConfirm"
-                type="password"
-                autoComplete="current-password"
-                value={passwordConfirm}
-                onChange={handleInputConfirm}
-              />
-              <div className="feedback">{renderFeedbackMessage()}</div>
-
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                label="Username"
-                type="text"
-                autoComplete="username"
-                value={username}
-                onChange={handleInputUsername}
-              />
-
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Box
-                    mt={1}
-                    color="primary.main"
-                    component="span"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Button onClick={() => history.push('/login')}>취소</Button>
-                  </Box>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Box
-                    mt={1}
-                    color="primary.main"
-                    component="span"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Button onClick={handleInputReset}>다시 작성</Button>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Box mx="auto">
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                      value="Sign Up"
-                      onClick={handleSubmit}
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Box
+                      mt={1}
+                      color="primary.main"
+                      component="span"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
                     >
-                      Sign Up
-                    </Button>
-                  </Box>
+                      <Button onClick={() => history.push('/login')}>
+                        취소
+                      </Button>
+                    </Box>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <Box
+                      mt={1}
+                      color="primary.main"
+                      component="span"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Button onClick={handleInputReset}>다시 작성</Button>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  value="Sign Up"
+                  // onClick={handleSubmit}
+                >
+                  Sign Up
+                </Button>
+              </ValidatorForm>
             </form>
           </div>
         </Grid>
