@@ -85,7 +85,7 @@ function App({ history }) {
       .then(() => {
         storeCollector();
       });
-  }, []);
+  });
 
   function UserInfo() {
     if (isLogin) {
@@ -103,6 +103,7 @@ function App({ history }) {
             <Button
               onClick={() => {
                 handleSignout();
+                handleCloseModal();
                 history.push('/');
               }}
             >
@@ -137,9 +138,10 @@ function App({ history }) {
               <Button
                 color="inherit"
                 onClick={() => {
-                  history.push('/');
                   window.sessionStorage.clear(); // 저장된 세션스토리지를 비우고 로그인으로 이동
                   setIsLogin(false);
+                  handleLogout();
+                  history.push('/');
                 }}
               >
                 Log out
