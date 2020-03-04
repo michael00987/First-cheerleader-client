@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 function App({ history }) {
   const [isLogin, setIsLogin] = useState(false);
+  const [store, setStore] = useState(false);
   const [modal, setModal] = useState(false);
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -58,26 +59,32 @@ function App({ history }) {
     });
   }
 
+  function storeCollector() {
+    //로그인상태 갱신 메서드
+    let store = JSON.parse(window.sessionStorage.getItem('login'));
+    if (store && store.login) {
+      setStore(store.token);
+      setIsLogin(true);
+    }
+  }
   function handleLogout() {
     axios({
       method: 'post',
       url: 'http://15.164.164.204:4000/user/logout',
     });
   }
-
   useEffect(() => {
-    if (window.sessionStorage.getItem('email')) {
-      // 새션에 있는지 확인하고 있으면 로그인 상태로 바꾸고 루트로 보냄 ==> 루트로 보내도 getmsg로 이동함
-      handleIsLogin();
-      history.push('/');
-    }
     axios({
       method: 'get',
       url: 'http://15.164.164.204:4000/user/info',
-    }).then(res => {
-      setEmail(res.data.email);
-      setUsername(res.data.username);
-    });
+    })
+      .then(res => {
+        setEmail(res.data.email);
+        setUsername(res.data.username);
+      })
+      .then(() => {
+        storeCollector();
+      });
   }, []);
 
   function UserInfo() {
@@ -126,17 +133,20 @@ function App({ history }) {
             <Typography variant="h6" className={classes.title}>
               Menu
             </Typography>
-            <Button
-              color="inherit"
-              onClick={() => {
-                handleLogout(); // 로그아웃을 누르려면 모달이 비활성화 되야하기때문에 modalClose는 필요없음
-                window.sessionStorage.setItem('email', null); // 저장된 세션스토리지를 비우고 로그인으로 이동
-                setIsLogin(false);
-                history.push('/');
-              }}
-            >
-              Log out
-            </Button>
+            {isLogin ? (
+              <Button
+                color="inherit"
+                onClick={() => {
+                  history.push('/');
+                  window.sessionStorage.clear(); // 저장된 세션스토리지를 비우고 로그인으로 이동
+                  setIsLogin(false);
+                }}
+              >
+                Log out
+              </Button>
+            ) : (
+              <div></div>
+            )}
             <IconButton
               aria-label="account of current user"
               aria-controls="primary-search-account-menu"
@@ -154,32 +164,32 @@ function App({ history }) {
           <UserInfo />
         </Dialog>
       </div>
-      <Switch>
-        <Route
-          exact
-          path="/login"
-          render={() => (
-            <Login isLogin={isLogin} handleIsLogin={handleIsLogin} />
-          )}
-        />
-        <Route
-          exact
-          path="/signup"
-          render={() => <Signup isLogin={isLogin} />}
-        />
-        <Route path="/getmsg" render={() => <GetMsg isLogin={isLogin} />} />
-        <Route path="/sendmsg" render={() => <SendMsg isLogin={isLogin} />} />
-        <Route
-          path="/"
-          render={() => {
-            if (isLogin) {
-              // console.log('?????');
+      {isLogin ? (
+        <Switch>
+          <Route path="/getmsg" render={() => <GetMsg isLogin={isLogin} />} />
+          <Route path="/sendmsg" render={() => <SendMsg isLogin={isLogin} />} />
+          <Route
+            path="/"
+            render={() => {
               return <Redirect to="/getmsg" />;
-            }
-            return <Redirect to="/login" />;
-          }}
-        />
-      </Switch>
+            }}
+          />
+        </Switch>
+      ) : (
+        <Switch>
+          <Route path="/signup" render={() => <Signup isLogin={isLogin} />} />
+          <Route
+            path="/"
+            render={() => (
+              <Login
+                isLogin={isLogin}
+                handleIsLogin={handleIsLogin}
+                storeCollector={storeCollector}
+              />
+            )}
+          />
+        </Switch>
+      )}
     </div>
   );
 }
