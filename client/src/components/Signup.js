@@ -2,22 +2,26 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
+import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/styles';
+
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-// import { grey } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box'; // *** 제일 마지막에 import 해야 적용됨
 
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+
 axios.defaults.withCredentials = true;
 
-// material-ui/style
+/******************** material-ui/style ************************/
+// style
 const useStyles = makeStyles(theme => ({
   root: {
     height: '100vh',
@@ -41,19 +45,30 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: green[700],
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '90%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  hidden: {
-    display: 'none',
-  },
 }));
+
+// theme
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#388e3c',
+    },
+    secondary: {
+      main: '#11cb5f',
+    },
+  },
+});
+
+/***************************************************************/
 
 // Signup
 function Signup({ history }) {
@@ -62,7 +77,6 @@ function Signup({ history }) {
   const [passwordConfirm, setConfirm] = useState('');
   const [username, setUsername] = useState('');
 
-  /*************************** 인풋 관리 ****************************/
   function handleInputEmail(e) {
     setEmail(e.target.value);
   }
@@ -132,136 +146,113 @@ function Signup({ history }) {
   const classes = useStyles();
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
 
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={handleInputEmail}
-            />
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Email Address"
+                autoFocus
+                value={email}
+                onChange={handleInputEmail}
+              />
 
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={handleInputPassword}
-            />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={handleInputPassword}
+              />
 
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="passwordConfirm"
-              name="passwordConfirm"
-              label="PasswordConfirm"
-              type="password"
-              autoComplete="current-password"
-              value={passwordConfirm}
-              onChange={handleInputConfirm}
-            />
-            <div className="feedback">{renderFeedbackMessage()}</div>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="PasswordConfirm"
+                type="password"
+                autoComplete="current-password"
+                value={passwordConfirm}
+                onChange={handleInputConfirm}
+              />
+              <div className="feedback">{renderFeedbackMessage()}</div>
 
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              name="username"
-              label="Username"
-              type="text"
-              autoComplete="username"
-              value={username}
-              onChange={handleInputUsername}
-            />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Username"
+                type="text"
+                autoComplete="username"
+                value={username}
+                onChange={handleInputUsername}
+              />
 
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Box
-                  mt={1}
-                  color="primary.main"
-                  component="span"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Button onClick={() => history.push('/login')}>취소</Button>
-                </Box>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Box
-                  mt={1}
-                  color="primary.main"
-                  component="span"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Button onClick={handleInputReset}>다시 작성</Button>
-                  {/*}
-                  <Button
-                    type="submit"
-                    // fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    value="다시 작성"
-                    onClick={handleInputReset}
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <Box
+                    mt={1}
+                    color="primary.main"
+                    component="span"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    다시 작성
-                  </Button>
-                 */}
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Box display="flex" alignItems="center" justifyContent="center">
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    value="Sign Up"
-                    onClick={
-                      // alert('회원가입 성공')
-                      handleSubmit
-                    }
+                    <Button onClick={() => history.push('/login')}>취소</Button>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Box
+                    mt={1}
+                    color="primary.main"
+                    component="span"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    Sign Up
-                  </Button>
-                </Box>
+                    <Button onClick={handleInputReset}>다시 작성</Button>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box mx="auto">
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                      value="Sign Up"
+                      onClick={handleSubmit}
+                    >
+                      Sign Up
+                    </Button>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Grid>
+            </form>
+          </div>
+        </Grid>
+      </ThemeProvider>
     </Grid>
   );
 }
