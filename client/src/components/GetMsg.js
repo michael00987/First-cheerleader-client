@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,21 +12,22 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import { BottomNavigation } from '@material-ui/core';
 import { BottomNavigationAction } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Box from '@material-ui/core/Box';
+import { green } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
+
 // import Typography from '@material-ui/core/Typography';
 
 axios.defaults.withCredentials = true;
 
-// material-ui/style
+/******************** material-ui/style ************************/
+// style
 const useStyles = makeStyles(theme => ({
   '@global': {
     ul: {
@@ -38,44 +40,39 @@ const useStyles = makeStyles(theme => ({
     width: 300,
     height: 300,
   },
-
-  cardHeader: {
-    backgroundColor:
-      theme.palette.type === 'dark'
-        ? theme.palette.grey[700]
-        : theme.palette.grey[200],
-  },
   cardContent: {
+    paddingTop: theme.spacing(15),
+    paddingButtom: theme.spacing(20),
     display: 'block', // 한 줄 차지
     width: '30vw',
     height: '50vw',
   },
-  cardAction: {},
   bottom: {
     display: 'flex',
     justifyContent: 'center',
     height: 50,
-    // backgroundColor: theme.palette.background.paper,
     backgroundColor:
       theme.palette.type === 'dark'
-        ? theme.palette.grey[900]
+        ? theme.palette.grey[800]
         : theme.palette.grey[50],
   },
 }));
-
+// theme
 const theme = createMuiTheme({
   palette: {
     primary: {
+      light: '#81c784',
       main: '#388e3c',
-    },
-    secondary: {
-      main: '#11cb5f',
+      dark: '#1b5e20',
+      contrastText: '#e8f5e9',
     },
   },
 });
 
+/***************************************************************/
+
 // GetMsg
-function GetMsg({ isLogin, history }) {
+function GetMsg({ history }) {
   const [text, setText] = useState('');
   const [date, setDate] = useState('');
 
@@ -90,51 +87,18 @@ function GetMsg({ isLogin, history }) {
   }, []);
   // }, [text]);
 
-  // 뒤로가기
-  function handleBack() {
-    history.goBack();
-  }
-
   const classes = useStyles();
-  if (!isLogin) {
-    return (
-      <div>
-        <div
-          style={{
-            fontSize: 50,
-            fontWeight: 'bold',
-            // color: 'red',
-            textAlign: 'center',
-            margin: '50px',
-          }}
-        >
-          Not Found
-        </div>
-
-        <div>
-          <IconButton style={{ align: 'center' }}>
-            <LockOutlinedIcon onClick={handleBack} size="large" />
-          </IconButton>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="getMsg">
+  return (
+    <div className="getMsg">
+      <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth="md" component="main">
-          <Grid container spacing={5} alignItems="flex-start">
+        <Container maxWidth="sm">
+          <Grid container spacing={5}>
             <Grid item xs={12}>
               <Card>
                 <CardHeader
-                  titleTypographyProps={{ align: 'center' }}
                   className={classes.cardHeader}
-                  title="Message Page"
-                  action={
-                    <IconButton>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
+                  // title="Message Page"
                 ></CardHeader>
 
                 <CardContent>
@@ -143,7 +107,7 @@ function GetMsg({ isLogin, history }) {
                     spacing={3}
                     align="center"
                     justify="center"
-                    alignItems="center" // *** align center>
+                    alignItems="center"
                   >
                     <div className={classes.cardContent} variant="outlined">
                       <Grid item xs={12}>
@@ -156,12 +120,13 @@ function GetMsg({ isLogin, history }) {
                         </Box>
                         <Box
                           m="auto"
-                          name="contents"
+                          name="created_at"
                           style={{
                             fontSize: 15,
                             fontStyle: 'italic',
                             float: 'right',
                             padding: '20px',
+                            color: grey[500],
                           }}
                         >
                           {date.slice(0, 10)}
@@ -172,19 +137,17 @@ function GetMsg({ isLogin, history }) {
                 </CardContent>
 
                 <Grid item xs={12}>
-                  <CardActions className={classes.cardAction}>
-                    <ThemeProvider theme={theme}>
-                      <Button
-                        color="primary"
-                        type="submit"
-                        fullWidth
-                        value="응원메세지 작성하러 가기"
-                        style={{ fontSize: '17px' }}
-                        onClick={() => history.push('/sendmsg')}
-                      >
-                        응원메세지 작성하러 가기
-                      </Button>
-                    </ThemeProvider>
+                  <CardActions>
+                    <Button
+                      color="primary"
+                      type="submit"
+                      fullWidth
+                      value="응원메세지 작성하러 가기"
+                      style={{ fontSize: '17px' }}
+                      onClick={() => history.push('/sendmsg')}
+                    >
+                      응원메세지 작성하러 가기
+                    </Button>
                   </CardActions>
                 </Grid>
               </Card>
@@ -193,17 +156,18 @@ function GetMsg({ isLogin, history }) {
         </Container>
         <Grid container spacing={5}>
           <Grid item xs={12}>
-            <BottomNavigation showLabels className={classes.bottom}>
+            <BottomNavigation className={classes.bottom}>
               <BottomNavigationAction
+                style={{ color: green[500] }}
                 value="favorites"
                 icon={<FavoriteIcon />}
               />
             </BottomNavigation>
           </Grid>
         </Grid>
-      </div>
-    );
-  }
+      </ThemeProvider>
+    </div>
+  );
 }
 
 export default withRouter(GetMsg);
