@@ -129,12 +129,23 @@ function App({ history }) {
             </Typography>
             <br />
             <Typography align="center">
-              <Button
+              {/* <Button
                 className={classes.modalButton}
                 size="small"
                 variant="contained"
               >
                 정보 수정
+              </Button> */}
+              <Button
+                className={classes.modalButton}
+                size="small"
+                variant="contained"
+                onClick={() => {
+                  handleCloseModal();
+                  history.push('/');
+                }}
+              >
+                취소
               </Button>
               <Button
                 className={classes.modalButton}

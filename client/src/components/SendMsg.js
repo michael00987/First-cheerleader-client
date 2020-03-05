@@ -7,20 +7,18 @@ import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
+// import CardHeader from '@material-ui/core/CardHeader';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Textfield from '@material-ui/core/Textfield';
-import { BottomNavigation } from '@material-ui/core';
-import { BottomNavigationAction } from '@material-ui/core';
+// import { BottomNavigation } from '@material-ui/core';
+// import { BottomNavigationAction } from '@material-ui/core';
 // import Box from '@material-ui/core/Box';
-
-import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { green } from '@material-ui/core/colors';
+// import { green } from '@material-ui/core/colors';
 
 // import Typography from '@material-ui/core/Typography';
 
@@ -37,15 +35,19 @@ const useStyles = makeStyles(theme => ({
     },
   },
   root: {
-    width: 300,
-    height: 300,
+    width: '100%',
+    height: '100%',
+    display: 'block',
+    backgroundImage:
+      'url(https://source.unsplash.com/user/hy0212/likes/2400x1200)',
+    backgroundRepeat: 'no-repeat',
   },
   cardContent: {
     paddingTop: theme.spacing(1),
     paddingButtom: theme.spacing(10),
     display: 'block', // 한 줄 차지
-    width: '100vw',
-    height: '60vw',
+    width: '50vw',
+    height: '40vw',
   },
   bottom: {
     display: 'flex',
@@ -108,7 +110,7 @@ function SendMsg({ history }) {
 
   const classes = useStyles();
   return (
-    <div className="sendMsg">
+    <div className={classes.root}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="sm">
@@ -181,7 +183,7 @@ function SendMsg({ history }) {
             </Grid>
           </Grid>
         </Container>
-        <Grid container spacing={5}>
+        {/* <Grid container spacing={5}>
           <Grid item xs={12}>
             <BottomNavigation className={classes.bottom}>
               <BottomNavigationAction
@@ -191,7 +193,7 @@ function SendMsg({ history }) {
               />
             </BottomNavigation>
           </Grid>
-        </Grid>
+        </Grid> */}
       </ThemeProvider>
     </div>
   );
